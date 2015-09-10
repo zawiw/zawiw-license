@@ -9,4 +9,7 @@ Author URI:
 License: MIT
 */
 
+add_action('admin_menu', 'zawiwLicenceCreateMenu');
+require_once dirname( __FILE__ ) .'/admin.php';
+require_once dirname( __FILE__ ) .'/init.php';
 ?>
