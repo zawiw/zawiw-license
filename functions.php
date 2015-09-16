@@ -26,5 +26,4 @@ function parseURL($list)
    }
    return $paths;
 }
-
 ?>

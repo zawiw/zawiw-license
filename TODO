@@ -1,10 +1,15 @@
 Ausstehend
 ==========
 - Mehrsprachige strings
-- Datenbank
 - bild- Dateiformate ergänzen
-
-/var/www/web10/html/wp-content/uploads/sites/ blog_prefix without 'wp_'
+- dummy für pdf und andere files
+- styles
+- write data to db
+- lizenzen verwalten
+- suchfunktion -> siehe chat
+- media mit lizenzdaten in post schreiben
+bearbeiten fenster -> postimage !!!!!!visuell
 
 erledigt
 ==========
+- Datenbank
