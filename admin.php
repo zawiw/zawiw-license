@@ -21,14 +21,14 @@ function zawiwLicenseBackend()
    } elseif (count($_POST) === 0) {
       alterBlogMedia($_GET['path']);
    } else {
-      succeedChangeMedia();
+      succeedChangeMedia($_POST['path'], $_POST['chooseLicense'], $_POST['author'], $_POST['origin']);
    }
    ?></div><?php
 }
 function viewBlogMedia()
 {
    ?>
-      <li>
+      <ul>
    <?php
    $blogMedia = readBlogMedia();
    foreach ($blogMedia as $path) {
@@ -37,19 +37,27 @@ function viewBlogMedia()
          case 'png':
          case 'jpg':
          ?>
-         <ul><a href="?page=zawiwLicense&amp;path=<?=$path ?>"><img src="<?=$path ?>" alt="someText" height="150" width="150"/></a></ul>
+         <li>
+	         <a href="?page=zawiwLicense&amp;path=<?=$path ?>"><img src="<?=$path ?>" alt="<?= basename($path) ?>" height="150" width="150"/></a>
+	     </li>
          <?php
             break;
 
          default:
          ?>
-            <ul><div><?=$matches[1] ?></div></ul>
+            <li>
+            	<a href="?page=zawiwLicense&amp;path=<?=$path ?>">
+	            	<img src="http://mirror.forschendes-lernen.de/wp-includes/images/media/document.png" alt="<?= basename($path) ?>" />
+					<br/>
+					<?=$matches[1] ?>
+				</a>
+	        </li>
          <?php
             break;
       }
    }
    ?>
-   </li>
+   </ul>
    <?php
 }
 function alterBlogMedia($path)
@@ -59,8 +67,10 @@ function alterBlogMedia($path)
    <div class="alterMediaContainer">
       <img src="<?=$path ?>" alt="" class="" />
       <form class="alterMediaForm" method="post" action="" >
-         <div><label for="chooseLicense">Lizenz:</label>
-            <select  name="chooseLicense" id="chooseLicense">
+         <div>
+	        <input type="hidden" name="path" value="<?= $path ?>" />
+	        <label for="chooseLicense">Lizenz:</label>
+			<select  name="chooseLicense" id="chooseLicense">
                <?php  $licenses = getLicenses();
                foreach($licenses as $license) {
                   $selected = $info != null && $info->license === $license->id ? "selected=\"selected\"" : "";
@@ -76,14 +86,39 @@ function alterBlogMedia($path)
             <input type="text" name="origin" id="origin" value="<?= $info == null ? "" : $info->origin ?>" />
          </div>
          <a class="button" id="cancel" href="?page=zawiwLicense">Abbrechen</a>
-         <input type="submit" name="save" id="save" value="Speichern" />
+         <input class="button" type="submit" name="save" id="save" value="Speichern" />
       </form>
    </div>
 <?php
 }
-function succeedChangeMedia()
+
+function succeedChangeMedia($path, $licenseID, $author, $origin)
 {
-   echo "succed method";
+	$mediaInfo = getMediaInfo($path);
+	if($mediaInfo === NULL) { // if not saved yet
+		$mediaInfo = (object) array(
+			'path' => $path,
+			'license' => $licenseID,
+			'author' => $author,
+			'origin' => $origin
+		);
+	}
+	$fileName = basename($mediaInfo->path);
+	$license = getLicense($licenseID);
+	if($license === NULL) {
+		displayError("The provided license for $fileName is invalid.");
+	} else {
+		$mediaInfo->license = $licenseID;
+		$mediaInfo->author = $author;
+		$mediaInfo->origin = $origin;
+		$rc = saveMediaInfo($mediaInfo);
+
+		if($rc > 0)
+			displayUpdated("Updated license of $fileName to <a target=\"_blank\" href=\"$license->link\">$license->name</a>.");
+		else 
+			displayError("Nothing to save for $fileName.");
+	}
+	
    viewBlogMedia();
 }
 function importStylesheets()
@@ -94,4 +129,26 @@ function importScripts()
 {
 
 }
+
+function displayUpdated($msg) 
+{
+	?>
+	<div class="updated">
+		<p>
+			<?= $msg ?>
+		</p>
+	</div>
+	<?php
+}
+function displayError($msg) 
+{
+	?>
+	<div class="error">
+		<p>
+			<?= $msg ?>
+		</p>
+	</div>
+	<?php
+}
+
 ?>
