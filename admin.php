@@ -3,90 +3,102 @@ require_once dirname( __FILE__ ) .'/functions.php';
 require_once dirname( __FILE__ ) .'/dbfunctions.php';
 function zawiwLicenseCreateMenu()
 {
-   /*
+	/*
    check capability
    add_media_page( $page_title, $menu_title, $capability, $menu_slug, $function);
    */
-   add_media_page('zawiwLicense', 'License', 'upload_files', 'zawiwLicense', 'zawiwLicenseBackend');
+	add_media_page('zawiwLicense', 'License', 'upload_files', 'zawiwLicense', 'zawiwLicenseBackend');
 }
 function zawiwLicenseBackend()
 {
-   ?>
+?>
    <div id="zawiwLicenseAdminArea">
-      <h1><?= __('ZAWiW License', 'zawiw-license') ?></h1>
+      <h1><?php echo __('ZAWiW License', 'zawiw-license') ?></h1>
    <?php
-   if(!isset($_GET['path']))
-   {
-      viewBlogMedia();
-   } elseif (count($_POST) === 0) {
-      alterBlogMedia($_GET['path']);
-   } else {
-      succeedChangeMedia($_POST['path'], $_POST['chooseLicense'], $_POST['author'], $_POST['origin']);
-   }
-   ?></div><?php
+	if(isset($_GET['site'])) {
+		$site = $_GET['site'];
+	} else $site = '';
+	
+	switch($site) {
+	case 'viewLicenses':
+		break;
+
+	case 'alterBlogMedia':
+		alterBlogMedia($_GET['path']);
+		break;
+
+	case 'saveBlogMedia':
+		succeedChangeMedia($_POST['path'], $_POST['chooseLicense'], $_POST['author'], $_POST['origin']);
+		break;
+
+	case 'viewBlogMedia':
+	default:
+		viewBlogMedia();
+	}
+	?></div><?php
 }
 function viewBlogMedia()
 {
-   ?>
+?>
       <ul>
    <?php
-   $blogMedia = readBlogMedia();
-   foreach ($blogMedia as $path) {
-      preg_match('/.*\.(\w*)$/', $path, $matches);
-      switch ($matches[1]) {
-         case 'png':
-         case 'jpg':
-         ?>
+	$blogMedia = readBlogMedia();
+	foreach ($blogMedia as $path) {
+		preg_match('/.*\.(\w*)$/', $path, $matches);
+		switch ($matches[1]) {
+		case 'png':
+		case 'jpg':
+?>
          <li>
-	         <a href="?page=zawiwLicense&amp;path=<?=$path ?>"><img src="<?=$path ?>" alt="<?= basename($path) ?>" height="150" width="150"/></a>
+	         <a href="?page=zawiwLicense&amp;site=alterBlogMedia&amp;path=<?php echo $path ?>"><img src="<?php echo $path ?>" alt="<?php echo basename($path) ?>" height="150" width="150"/></a>
 	     </li>
          <?php
-            break;
+			break;
 
-         default:
-         ?>
+		default:
+?>
             <li>
-            	<a href="?page=zawiwLicense&amp;path=<?=$path ?>">
-	            	<img src="http://mirror.forschendes-lernen.de/wp-includes/images/media/document.png" alt="<?= basename($path) ?>" />
+            	<a href="?page=zawiwLicense&amp;site=alterBlogMedia&amp;path=<?php echo $path ?>">
+	            	<img src="http://mirror.forschendes-lernen.de/wp-includes/images/media/document.png" alt="<?php echo basename($path) ?>" />
 					<br/>
-					<?=$matches[1] ?>
+					<?php echo $matches[1] ?>
 				</a>
 	        </li>
          <?php
-            break;
-      }
-   }
-   ?>
+			break;
+		}
+	}
+?>
    </ul>
    <?php
 }
 function alterBlogMedia($path)
 {
-   $info = getMediaInfo($path);
-   ?>
+	$info = getMediaInfo($path);
+?>
    <div class="alterMediaContainer">
-      <img src="<?=$path ?>" alt="" class="" />
-      <form class="alterMediaForm" method="post" action="" >
+      <img src="<?php echo $path ?>" alt="" class="" />
+      <form class="alterMediaForm" method="post" action="?page=zawiwLicense&amp;site=saveBlogMedia" >
          <div>
-	        <input type="hidden" name="path" value="<?= $path ?>" />
-	        <label for="chooseLicense"><?= __('License:', 'zawiw-license') ?></label>
+	        <input type="hidden" name="path" value="<?php echo $path ?>" />
+	        <label for="chooseLicense"><?php echo __('License:', 'zawiw-license') ?></label>
 			<select  name="chooseLicense" id="chooseLicense">
                <?php  $licenses = getLicenses();
-               foreach($licenses as $license) {
-                  $selected = $info != null && $info->license === $license->id ? "selected=\"selected\"" : "";
-                  echo "<option ". $selected ." value=\"". $license->id ."\">". $license->name ."</option>";
-               }
-               ?>
+	foreach($licenses as $license) {
+		$selected = $info != null && $info->license === $license->id ? "selected=\"selected\"" : "";
+		echo "<option ". $selected ." value=\"". $license->id ."\">". $license->name ."</option>";
+	}
+?>
             </select>
          </div>
-         <div><label for="author"><?= __('Author:', 'zawiw-license') ?></label>
-            <input type="text" name="author" id="author" value="<?= $info == null ? "" : $info->author ?>" />
+         <div><label for="author"><?php echo __('Author:', 'zawiw-license') ?></label>
+            <input type="text" name="author" id="author" value="<?php echo $info == null ? "" : $info->author ?>" />
          </div>
-         <div><label for="origin"><?= __('Source:', 'zawiw-license') ?></label>
-            <input type="text" name="origin" id="origin" value="<?= $info == null ? "" : $info->origin ?>" />
+         <div><label for="origin"><?php echo __('Source:', 'zawiw-license') ?></label>
+            <input type="text" name="origin" id="origin" value="<?php echo $info == null ? "" : $info->origin ?>" />
          </div>
-         <a class="button" id="cancel" href="?page=zawiwLicense"><?= __('Abort', 'zawiw-license') ?></a>
-         <input class="button" type="submit" name="save" id="save" value="<?= __('Save', 'zawiw-license') ?>" />
+         <a class="button" id="cancel" href="?page=zawiwLicense&amp;site=viewBlogMedia"><?php echo __('Abort', 'zawiw-license') ?></a>
+         <input class="button" type="submit" name="save" id="save" value="<?php echo __('Save', 'zawiw-license') ?>" />
       </form>
    </div>
 <?php
@@ -114,12 +126,12 @@ function succeedChangeMedia($path, $licenseID, $author, $origin)
 		$rc = saveMediaInfo($mediaInfo);
 
 		if($rc > 0)
-			displayUpdated(sprintf(__("Updated license of %s to %s."), $fileName, "<a target=\"_blank\" href=\"$license->link\">$license->name</a>."));
-		else 
-			displayError(sprintf(__("Nothing to save for %s."), $fileName));
+			displayUpdated(sprintf(__("Updated license of %s to %s."), $fileName, "<a target=\"_blank\" href=\"$license->link\">$license->name</a>"));
+		else
+			displayUpdated(sprintf(__("Nothing to save for %s."), $fileName));
 	}
-	
-   viewBlogMedia();
+
+	viewBlogMedia();
 }
 function importStylesheets()
 {
@@ -130,22 +142,22 @@ function importScripts()
 
 }
 
-function displayUpdated($msg) 
+function displayUpdated($msg)
 {
-	?>
+?>
 	<div class="updated">
 		<p>
-			<?= $msg ?>
+			<?php echo $msg ?>
 		</p>
 	</div>
 	<?php
 }
-function displayError($msg) 
+function displayError($msg)
 {
-	?>
+?>
 	<div class="error">
 		<p>
-			<?= $msg ?>
+			<?php echo $msg ?>
 		</p>
 	</div>
 	<?php

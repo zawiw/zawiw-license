@@ -22,7 +22,6 @@ function saveMediaInfo($mediaInfo)
 	global $wpdb;
 	$prefix = genTablePrefix();
 	$tableName = $prefix.'blogMedia';
-	$wpdb->show_errors();
 	$stmt = $wpdb->prepare(
 		"INSERT INTO $tableName (license, author, origin, path) VALUES (%d, %s, %s, %s) "
 		."ON DUPLICATE KEY UPDATE license=VALUES(license),author=VALUES(author),origin=VALUES(origin)", 
@@ -48,5 +47,32 @@ function getLicense($id)
 	$stmt = $wpdb->prepare("SELECT * FROM $tableName WHERE id = %d LIMIT 1", $id);
 	$license = $wpdb->get_row($stmt);
 	return $license;
+}
+function saveLicense($license) 
+{
+	global $wpdb;
+	$prefix = genTablePrefix();
+	$tableName = $prefix.'mediaLicense';
+	if($license->id)
+	$stmt = $wpdb->prepare(
+		"UPDATE $tableName SET name=%s,link=%s "
+		."WHERE id=%d",
+		$license->name, $license->link, $license->id
+	);
+	$result = $wpdb->query($stmt);
+	return $result;
+}
+function createLicense($name, $link)
+{
+	global $wpdb;
+	$prefix = genTablePrefix();
+	$tableName = $prefix.'mediaLicense';
+	if($license->id)
+	$stmt = $wpdb->prepare(
+		"INSERT INTO $tableName (name, link) VALUES(%s, %s)",
+		$name, $link
+	);
+	$result = $wpdb->query($stmt);
+	return $result;
 }
 ?>
