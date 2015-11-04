@@ -1,2 +1,4 @@
 .config.php
 ._*
+.DS_Store
+[Tt]humbs.db

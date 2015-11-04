@@ -1,10 +1,11 @@
 Ausstehend
 ==========
-- Mehrsprachige strings
+- Mehrsprachige strings --> poedit: fleißg sien
 - bild- Dateiformate ergänzen
-- dummy für pdf und andere files
-- styles
-- lizenzen verwalten
+- dummy für pdf und andere files  -> nur pdf !!! absoluter pfad bisher
+- styles -> angelegt
+- lizenzen verwalten -> löschen geht
+                     TODO: speichern und anlegen
 - suchfunktion -> siehe chat
 bearbeiten fenster -> postimage !!!!!!visuell
 

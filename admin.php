@@ -18,9 +18,10 @@ function zawiwLicenseBackend()
 	if(isset($_GET['site'])) {
 		$site = $_GET['site'];
 	} else $site = '';
-	
+
 	switch($site) {
 	case 'viewLicenses':
+		require_once dirname( __FILE__ ) .'/mgmt/viewLicenses.php';
 		break;
 
 	case 'alterBlogMedia':
@@ -40,6 +41,7 @@ function zawiwLicenseBackend()
 function viewBlogMedia()
 {
 ?>
+	<a class="button" id="licenseMgmt" href="?page=zawiwLicense&amp;site=viewLicenses" ><?= __('Licenses', 'zawiw-license')?></a>
       <ul>
    <?php
 	$blogMedia = readBlogMedia();
@@ -106,36 +108,19 @@ function alterBlogMedia($path)
 
 function succeedChangeMedia($path, $licenseID, $author, $origin)
 {
-	$mediaInfo = getMediaInfo($path);
-	if($mediaInfo === NULL) { // if not saved yet
-		$mediaInfo = (object) array(
-			'path' => $path,
-			'license' => $licenseID,
-			'author' => $author,
-			'origin' => $origin
-		);
-	}
+	$mediaInfo = getValidMediaInfo($path, $licenseID, $author, $origin);
+	$license = getLicense($mediaInfo->license);
 	$fileName = basename($mediaInfo->path);
-	$license = getLicense($licenseID);
-	if($license === NULL) {
-		displayError(sprintf(__("The provided license for %s is invalid.", 'zawiw-license'), $fileName));
-	} else {
-		$mediaInfo->license = $licenseID;
-		$mediaInfo->author = $author;
-		$mediaInfo->origin = $origin;
-		$rc = saveMediaInfo($mediaInfo);
-
-		if($rc > 0)
-			displayUpdated(sprintf(__("Updated license of %s to %s."), $fileName, "<a target=\"_blank\" href=\"$license->link\">$license->name</a>"));
-		else
-			displayUpdated(sprintf(__("Nothing to save for %s."), $fileName));
-	}
+	if(tryChangeMediaInfo($mediaInfo)) {
+		displayUpdated(sprintf(__("Updated license of %s to %s."), $fileName, "<a target=\"_blank\" href=\"$license->link\">$license->name</a>"));
+	} else displayError(sprintf(__("The provided license for %s is invalid.", 'zawiw-license'), $fileName));
 
 	viewBlogMedia();
 }
 function importStylesheets()
 {
-
+	wp_enqueue_style('zawiwLicenseStyle', plugins_url( 'styles.css', __FILE__));
+	wp_enqueue_style('licenseStyle', plugins_url( '/mgmt/license.css', __FILE__));
 }
 function importScripts()
 {
