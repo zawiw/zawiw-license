@@ -36,6 +36,9 @@ function viewBlogMedia()
       switch ($matches[1]) {
          case 'png':
          case 'jpg':
+         case 'jpeg':
+         case 'gif':
+         case 'svg':
          ?>
          <li>
 	         <a href="?page=zawiwLicense&amp;path=<?=$path ?>"><img src="<?=$path ?>" alt="<?= basename($path) ?>" height="150" width="150"/></a>
