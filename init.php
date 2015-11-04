@@ -17,6 +17,10 @@ function licenseDeactivation()
       $wpdb->query($deleteQuery);
    }
 }
+function licenseLoadTextDomain() 
+{
+	load_plugin_textdomain('zawiw-license', false, dirname(plugin_basename(__FILE__)).'/lang/');
+}
 function createDatabase($blogPrefix)
 {
    $createBlogMediaQuery = 'CREATE TABLE ' . $blogPrefix . 'blogMedia (

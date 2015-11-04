@@ -12,6 +12,7 @@ License: MIT
 add_action('admin_head', 'importStylesheets');
 add_action('admin_head', 'importScripts');
 add_action('admin_menu', 'zawiwLicenseCreateMenu');
+add_action('plugins_loaded', 'licenseLoadTextDomain');
 require_once dirname( __FILE__ ) .'/admin.php';
 require_once dirname( __FILE__ ) .'/init.php';
 register_activation_hook(dirname( __FILE__ ).'/zawiw-license.php', 'licenseActivation');
