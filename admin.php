@@ -44,13 +44,16 @@ function viewBlogMedia()
 	<a class="button" id="licenseMgmt" href="?page=zawiwLicense&amp;site=viewLicenses" ><?= __('Licenses', 'zawiw-license')?></a>
       <ul>
    <?php
-	$blogMedia = readBlogMedia();
-	foreach ($blogMedia as $path) {
-		preg_match('/.*\.(\w*)$/', $path, $matches);
-		switch ($matches[1]) {
-		case 'png':
-		case 'jpg':
-?>
+   $blogMedia = readBlogMedia();
+   foreach ($blogMedia as $path) {
+      preg_match('/.*\.(\w*)$/', $path, $matches);
+      switch ($matches[1]) {
+         case 'png':
+         case 'jpg':
+         case 'jpeg':
+         case 'gif':
+         case 'svg':
+         ?>
          <li>
 	         <a href="?page=zawiwLicense&amp;site=alterBlogMedia&amp;path=<?php echo $path ?>"><img src="<?php echo $path ?>" alt="<?php echo basename($path) ?>" height="150" width="150"/></a>
 	     </li>
