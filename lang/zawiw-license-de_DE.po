@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-11-04 17:35+0100\n"
-"PO-Revision-Date: 2015-11-04 18:08+0100\n"
+"POT-Creation-Date: 2015-11-25 11:56+0100\n"
+"PO-Revision-Date: 2015-11-25 11:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,57 +19,69 @@ msgstr ""
 msgid "ZAWiW License"
 msgstr "ZAWiW License"
 
-#: admin.php:47
+#: admin.php:44
 msgid "Licenses"
 msgstr "Lizenzen"
 
-#: admin.php:89
+#: admin.php:46
+msgid "Search ..."
+msgstr "Suche ..."
+
+#: admin.php:92
 msgid "License:"
 msgstr "Lizenz:"
 
-#: admin.php:99
+#: admin.php:102
 msgid "Author:"
 msgstr "Urheber:"
 
-#: admin.php:102
+#: admin.php:105
 msgid "Source:"
 msgstr "Quelle:"
 
-#: admin.php:105
+#: admin.php:108
 msgid "Abort"
 msgstr "Abbrechen"
 
-#: admin.php:106 mgmt/viewLicenses.php:17 mgmt/viewLicenses.php:34
+#: admin.php:109 mgmt/viewLicenses.php:45 mgmt/viewLicenses.php:62
 msgid "Save"
 msgstr "Speichern"
 
-#: admin.php:118
+#: admin.php:121
 #, php-format
 msgid "Updated license of %s to %s."
 msgstr "Lizenz von %s auf %s aktualisiert."
 
-#: admin.php:119
+#: admin.php:122
 #, php-format
 msgid "The provided license for %s is invalid."
 msgstr "Die vorgesehene Lizenz für %s ist ungültig."
 
-#: mgmt/viewLicenses.php:10
+#: mgmt/viewLicenses.php:12 mgmt/viewLicenses.php:21
+msgid "Error saving license: minimum one field is empty"
+msgstr "Fehler beim speichern: Mindestens ein Feld ist leer!"
+
+#: mgmt/viewLicenses.php:16
+msgid "New license saved successfully"
+msgstr "Neue Lizenz erfolgreich gespeichert"
+
+#: mgmt/viewLicenses.php:38
 msgid "Add new license"
 msgstr "Neue Lizenz hinzufügen"
 
-#: mgmt/viewLicenses.php:13 mgmt/viewLicenses.php:29
+#: mgmt/viewLicenses.php:41 mgmt/viewLicenses.php:57
 msgid "Name:"
 msgstr "Name:"
 
-#: mgmt/viewLicenses.php:15 mgmt/viewLicenses.php:31
+#: mgmt/viewLicenses.php:43 mgmt/viewLicenses.php:59
 msgid "Link:"
 msgstr "Link:"
 
-#: mgmt/viewLicenses.php:23
+#: mgmt/viewLicenses.php:51
 msgid "Current licenses"
 msgstr "Aktuelle Lizenzen"
 
-#: mgmt/viewLicenses.php:35
+#: mgmt/viewLicenses.php:63
 msgid "Delete"
 msgstr "Löschen"
 

@@ -27,12 +27,12 @@ function parseURL($list)
    return $paths;
 }
 /**
- *	Returns a media info object with the given properties. 
+ *	Returns a media info object with the given properties.
  *	Additionally contains the id if media info is stored in database.
  *
  *	@param path string
  *	@param licenseID int
- * 	@param author string
+ * @param author string
  *	@param origin string
  *	@returns object
  */
@@ -62,7 +62,7 @@ function getValidMediaInfo($path, $licenseID, $author, $origin)
 function tryChangeMediaInfo($mediaInfo)
 {
 	$license = getLicense($mediaInfo->license);
-	
+
 	if($license === NULL) {
 		return false;
 	} else {

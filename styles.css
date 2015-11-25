@@ -3,3 +3,31 @@
 #zawiwLicenseAdminArea {
    font-family: Lato !important;
 }
+
+.mediaContent {
+   position: relative;
+   display: block;
+   width: 150px;
+   height: 150px;
+   float: left;
+   margin: 10px;
+   border-style: solid;
+   border-width: 1px;
+   border-color: #CCC;
+}
+
+.fileDesc {
+   position: absolute;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   width: 150px;
+   max-height: 100%;
+   overflow: hidden;
+   text-align: center;
+   font-weight: 700;
+   word-wrap: break-word;
+   color: #000;
+   background: rgba(255,255,255,.8);
+   opacity: 0.8;
+}

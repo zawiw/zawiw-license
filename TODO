@@ -1,14 +1,29 @@
+Future Work
+==========
+PikList Plugin: Custom Post Types
+   Bilder und Lizenzen als Custom Post Types
+   -> kein extra Datenbanken merh benötigt
+
+
 Ausstehend
 ==========
-- Mehrsprachige strings --> poedit: fleißg sien
+Bilderanzeige im Frontend:
+   bilder mit Overlay der Lizenz versehen falls ausgewählt
+   bei hover wird das Lizenzoverlay ausgeblendet
+   Bildgröße mitschicken-> Rendern für Textgröße der Lizenzangabe. !mingröße
+   jQuery Ajax
+
+- Mehrsprachige strings --> poedit: fleißg sein
 - bild- Dateiformate ergänzen
 - dummy für pdf und andere files  -> nur pdf !!! absoluter pfad bisher
-- styles -> angelegt
-- lizenzen verwalten -> löschen geht
-                     TODO: speichern und anlegen
-- suchfunktion -> siehe chat
+- styles -> angelegt ->> besser!! load wordpresCSS and name classes identical
 bearbeiten fenster -> postimage !!!!!!visuell
+
+Überall rückmeldungen bei Lizenzverwaltung
 
 erledigt
 ==========
 - Datenbank
+- lizenzen verwalten -> löschen geht, neu anlegen geht
+- Lizenzen verwalten: -> bearbeiten
+- suchfunktion

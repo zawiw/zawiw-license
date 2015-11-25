@@ -42,9 +42,13 @@ function viewBlogMedia()
 {
 ?>
 	<a class="button" id="licenseMgmt" href="?page=zawiwLicense&amp;site=viewLicenses" ><?= __('Licenses', 'zawiw-license')?></a>
-      <ul>
+   <div id="searchFilter">
+		<input class="" type="text" name="search" id="search" placeholder="<?= __('Search ...', 'zawiw-license')?>">
+	</div>
+	<ul>
    <?php
    $blogMedia = readBlogMedia();
+	#var_dump($blogMedia);
    foreach ($blogMedia as $path) {
       preg_match('/.*\.(\w*)$/', $path, $matches);
       switch ($matches[1]) {
@@ -54,20 +58,23 @@ function viewBlogMedia()
          case 'gif':
          case 'svg':
          ?>
-         <li>
-	         <a href="?page=zawiwLicense&amp;site=alterBlogMedia&amp;path=<?php echo $path ?>"><img src="<?php echo $path ?>" alt="<?php echo basename($path) ?>" height="150" width="150"/></a>
-	     </li>
+         <li class="mediaContent">
+	         <a href="?page=zawiwLicense&amp;site=alterBlogMedia&amp;path=<?php echo $path ?>"><img src="<?php echo $path ?>" alt="<?php echo basename($path) ?>" height="150" width="150"/>
+				</br>
+				</a>
+				<div class="fileDesc"><?= substr($path, strrpos($path, '/') +1) ?></div>
+		  </li>
          <?php
 			break;
 
 		default:
 ?>
-            <li>
+            <li class="mediaContent">
             	<a href="?page=zawiwLicense&amp;site=alterBlogMedia&amp;path=<?php echo $path ?>">
 	            	<img src="http://mirror.forschendes-lernen.de/wp-includes/images/media/document.png" alt="<?php echo basename($path) ?>" />
 					<br/>
-					<?php echo $matches[1] ?>
 				</a>
+					<div class="fileDesc"><?= substr($path, strrpos($path, '/') +1) ?></div>
 	        </li>
          <?php
 			break;
@@ -127,7 +134,7 @@ function importStylesheets()
 }
 function importScripts()
 {
-
+	wp_enqueue_script('licenseScript', plugins_url('helper.js', __FILE__));
 }
 
 function displayUpdated($msg)
