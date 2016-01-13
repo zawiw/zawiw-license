@@ -13,6 +13,10 @@ Bilderanzeige im Frontend:
    Bildgröße mitschicken-> Rendern für Textgröße der Lizenzangabe. !mingröße
    jQuery Ajax
 
+the_content -> filter
+   regex: ->imgtags suchen attribute
+   - overlay einfügen
+
 - Mehrsprachige strings --> poedit: fleißg sein
 - bild- Dateiformate ergänzen
 - dummy für pdf und andere files  -> nur pdf !!! absoluter pfad bisher
@@ -27,3 +31,23 @@ erledigt
 - lizenzen verwalten -> löschen geht, neu anlegen geht
 - Lizenzen verwalten: -> bearbeiten
 - suchfunktion
+
+convention
+======
+#selects all a with image as child
+a < img {
+   position: relative;
+}
+p > span {
+   position: absolute;
+}
+
+
+<p>
+ <a href="">?
+ <span class="overlaywrapper">
+  <a class="overlaylicense" href="license.com">CC BY SA </br>Author: Max Mustermann</a>
+ </span>
+ <img class="" src="" alt="" width="" height="">
+ </a>?
+</p>

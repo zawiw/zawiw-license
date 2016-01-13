@@ -1,6 +1,5 @@
 <?php
 require_once dirname( __FILE__ ) .'/../dbfunctions.php';
-require_once dirname( __FILE__ ) .'/licenseFunctions.php';
 require_once dirname( __FILE__ ) .'/../admin.php';
 
 if(isset($_GET['action']) && $_GET['action'] == 'delete'){

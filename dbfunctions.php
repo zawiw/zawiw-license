@@ -6,6 +6,10 @@ function genTablePrefix()
    return $blogPrefix .'zawiw_License_';
 }
 
+function getMediaInfoUrl($url)
+{
+   return getMediaInfo(parse_url($url, PHP_URL_PATH));
+}
 function getMediaInfo($path)
 {
    global $wpdb;
