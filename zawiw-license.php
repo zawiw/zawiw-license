@@ -22,7 +22,7 @@ register_activation_hook(dirname( __FILE__ ).'/zawiw-license.php', 'licenseActiv
 register_deactivation_hook(dirname( __FILE__ ).'/zawiw-license.php', 'licenseDeactivation');
 
 function test($content) {
-	return preg_replace_callback('/()?(<img class="[^"]*" src="([^"]+)" ?([a-zA-Z0-9]+="[^"]+" *)*\/?>)/i', function ($results) {
+	return preg_replace_callback('/()?(<img +class="[^"]*" +src="([^"]+)" ?([a-zA-Z0-9]+="[^"]+" *)*\/?>)/i', function ($results) {
 		$rawUrl = $results[3];
 		$mediaInfo = getMediaInfoUrl($rawUrl);
 		if($mediaInfo == null) {

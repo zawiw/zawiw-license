@@ -1,6 +1,10 @@
 <?php
 require_once dirname( __FILE__ ) .'/functions.php';
 require_once dirname( __FILE__ ) .'/dbfunctions.php';
+
+// The capability to determine wether editing licenses is enabled.
+define('EditLicensesCapability', 'admin');
+
 function zawiwLicenseCreateMenu()
 {
 	/*
@@ -40,8 +44,12 @@ function zawiwLicenseBackend()
 }
 function viewBlogMedia()
 {
-?>
-	<a class="button" id="licenseMgmt" href="?page=zawiwLicense&amp;site=viewLicenses" ><?= __('Licenses', 'zawiw-license')?></a>
+	if(current_user_can(EditLicensesCapability)) {
+		?>
+		<a class="button" id="licenseMgmt" href="?page=zawiwLicense&amp;site=viewLicenses" ><?= __('Licenses', 'zawiw-license')?></a>
+		<?php
+	}
+	?>
    <div id="searchFilter">
 		<input class="" type="text" name="search" id="search" placeholder="<?= __('Search ...', 'zawiw-license')?>">
 	</div>

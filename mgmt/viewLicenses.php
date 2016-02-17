@@ -2,6 +2,9 @@
 require_once dirname( __FILE__ ) .'/../dbfunctions.php';
 require_once dirname( __FILE__ ) .'/../admin.php';
 
+if (!current_user_can(EditLicensesCapability)) {
+	displayError(__('You don\'t have enough rights.', 'zawiw-license'));
+} else {
 if(isset($_GET['action']) && $_GET['action'] == 'delete'){
    // in dbfunctions
    deleteLicense($_GET['id']);
@@ -67,3 +70,6 @@ array_shift($licenses);
    }
    ?>
 </div>
+<?php
+
+}
