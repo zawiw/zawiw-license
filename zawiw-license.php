@@ -22,7 +22,7 @@ register_activation_hook(dirname( __FILE__ ).'/zawiw-license.php', 'licenseActiv
 register_deactivation_hook(dirname( __FILE__ ).'/zawiw-license.php', 'licenseDeactivation');
 
 function test($content) {
-	return preg_replace_callback('/(<a href="[^"]*">\s*)?(<img class="[^"]*" src="([^"]+)")/i', function ($results) {
+	return preg_replace_callback('/()?(<img class="[^"]*" src="([^"]+)" ?([a-zA-Z0-9]+="[^"]+" *)*\/?>)/i', function ($results) {
 		$rawUrl = $results[3];
 		$mediaInfo = getMediaInfoUrl($rawUrl);
 		if($mediaInfo == null) {
@@ -41,7 +41,7 @@ function test($content) {
 		if($mediaInfo->origin != null) {
 			$optOrigin .= ', Quelle: '.$mediaInfo->origin;
 		}
-		return $results[1]."<span class=\"overlaywrapper\" onclick=\"event.preventDefault();window.open('$licenseLink', '_blank');\">$name, Autor: $author$optOrigin</span>".$results[2];
+		return $results[1]."<span><span class=\"overlaywrapper\" onclick=\"event.preventDefault();window.open('$licenseLink', '_blank');\">$name, Autor: $author$optOrigin</span>".$results[2]."</span>";
 		}, $content). "<script>jQuery(\".overlaywrapper\").parent().map(function (i, p) { p.className += \"parent-overlay\";return p.className })</script>";
 }
 
